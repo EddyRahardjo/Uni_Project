@@ -1,0 +1,496 @@
+---
+Title: "Statistitcal Data Modelling Assignment 1"
+Student_Name: "Eddy "
+Student_Number: "33495068"
+date: "2023-08-12"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+### Part 1 ###
+
+#Question 1
+
+Given that P(A) = 0.39, $P(\overline{B})$ = 0.14, and P(A U B) = 0.95. Determine P(B)
+and P(A  B).
+Comment on what happen if you replace P(B) by 0.55 and what does this imply?
+Provide your answer and your explanation here.
+
+
+First we define the probabilty space first which is P(A) = 0.39 $P(\overline{B})$ = 0.14 $P(A\cup B)$ = 0.95
+To define P(B) we use the formula P(B) = 1 - $P(\overline{B})$
+
+$$
+P(B) = 1 - P(\overline{B})
+     \\= 1 - 0.14      
+     \\=  0.86
+$$
+
+Therefore P(B) = 0.86
+
+The formula to determine $P(A \cup B)$ = P(A) + P(B) - $P(A \cap B)$ therefore
+
+
+$$P(A U B) = P(A) + P(B) - P(A \cap B)$$
+$$0.95 = 0.39 + 0.86 - P(A \cap B)$$
+$$- P(A \cap B) = 0.95 - 0.86 - 0.39$$
+$$- P(A \cap B) = -0.30$$
+$$P(A \cap B) = 0.30$$
+
+
+
+Therefore the $P(A \cap B)$ is = 0.30
+
+If the $P(\overline{B})$ = 0.55 we need to use all the formula again
+
+
+$$P(B) = 1 - P(\overline{B})$$
+     $$= 1 - 0.55$$      
+     $$=0.45$$
+     
+$$P(A U B) = P(A) + P(B) - P(A \cap B)$$
+$$0.95 = 0.39 + 0.45 - P(A \cap B)$$
+$$- P(A \cap B) = 0.95 - 0.45 - 0.39$$
+$$- P(A \cap B) = 0.14$$
+$$P(A \cap B) = -0.14$$
+
+
+The new value for $P(A \cap B)$ is -0.14. In probability, the value cannot go below 0 or over 1 so since the value we got is a negative. Therefore it's impossible for the value of $P(\overline{B})$ to be 0.55
+
+#Question 2  
+
+Mr. and Mrs. Brown have two children, given that the probability of a boy or girl being born is the same and the genders of all children are independent of each other. If one child is randomly selected at first, and we know he is a boy. What is the probability that both children are boys?
+
+Provide your answer and your explanation here
+
+To answer this question we use bayes theorem formula. The formula itself is
+$P(B|A)$ = $\frac{P(A|B)P(B)}{P(A)}$
+
+The condition asked is both children are boys given that the first child is a boy
+
+First we need to define each probability which is
+P(A) = Has at least one boy = 3/4
+P(B) = Both are boys = 1/4
+P(A|B) = Has at least one boy given both are boys = 1
+
+Insert the value to the equation
+
+
+$$P(B \mid A) = \frac{P(A \mid B)P(B)}{P(A)}$$
+
+
+$$P(B \mid A) = \frac{(1)(1/4)}{3/4} = \frac{1}{3}$$
+
+
+Therefore the probability of both child are boys given the first child is a boy is $\frac{1}{3}$
+
+#Question 3  
+
+Jason is marking a hard mutiple choice question with 3 choices. The students may answer the question correctly by guessing with a probability of 1/3. If one student have 40% chance to know the answer. What is the probability that this student indeed know the answer given his MCQ is correctly answered?
+
+Provide your answer and your explanation here.
+
+The question asked for the probability of the student indeed know the answer given that the MCQ is correctly answered. For this question Bayes formula is used again
+
+$P(B|A)$ = $\frac{P(A|B)P(B)}{P(A)}$
+
+First define the probability conditions
+
+P(B|A) = The student know the answer given his MCQ is correct
+
+P(B) = Probability that the student know the answer = 40% = $\frac{4}{10}$
+
+$P(\overline{B})$ = Probability that the student didn't know the answer = 60% = $\frac{6}{10}$
+
+P(A|B) = Correct given know the answer = 1
+
+$P(A|\overline{B})$ = Correct given if guessing = 1/3
+
+We cannot define the probability of P(A) which is used in the theory so we need
+to open the formula further. The equation which P(A) is expanded is
+
+$P(B|A)$ = $\frac{P(A|B)P(B)}{P(A|B)P(B)+P(A|\overline{B})P(\overline{B})}$
+
+With this we can enter what we know to the equation therefore
+
+$$P(B|A) = \frac{1 * \frac{4}{10}}{(1 * \frac{4}{10})+(1 * \frac{6}{10})}$$
+$$P(B|A) = \frac{4}{10} * \frac{30}{18} = \frac{2}{3}$$
+So the possibility of a student knowing the answer given that their MCQ is correctly answered is $\frac{2}{3}$ 
+
+#Question 4 (4 Marks): 
+
+A gambler has a fair coin (i.e., the coin has both the head and the tail side) and a two-headed coin (i.e., both sides are head) in his pocket. He selects one of the coins at random, and when he flips it, it shows head. Then he flips the same coin a second time and again it shows head. What is the probability that the selected coin is the two-headed coin?
+
+Provide your answer and your explanation here.
+
+To answer the question, bayes theorem needs to be used which is 
+
+$P(B|A)$ = $\frac{P(A|B)P(B)}{P(A)}$
+
+To use the bayes theorem, the conditions of the proability needs to be defined
+therefore.
+
+P(B|A) = The selected coin is a head given that second flip is a head after the
+first flip is a head
+
+P(A|B) = Both flips are head given that the selected coin is a two headed coin = 1
+
+$P(A|\overline{B})$ = Both flips are head given that the selected coin is a
+fair coin and the first flip is a head = $\frac{1}{2}$
+
+P(A) = The coin taken is a two headed coin = $\frac{1}{2}$
+
+$P(\overline{A})$ = The coin taken is a two headed coin = $\frac{1}{2}$
+
+The conditions isn't enough to use the usual bayes formula therefore the formula
+needs to be expanded to
+
+$P(B|A)$ = $\frac{P(A|B)P(B)}{P(A|B)P(B)+P(A|\overline{B})P(\overline{B})}$
+
+Enter the number to the equation
+
+$$\frac{1 * 0.5}{1 * 0.5 + 0.25 * 0.5}$$
+
+$$\frac{1}{2}*\frac{8}{5} = \frac{4}{5}$$
+
+Therefore the probability of the selected coin is a head given that the second
+flip is a head after the first flip is a head is 4/5 or 80%
+
+### Part 2 ###
+
+#Question 1 (4 Marks): 
+
+The diameter of a certain disk follows the uniform distribution within a specific interval [c, d] i.e., X $\sim$ U (c, d) with c = 1 and d = 5, find the average area of the disc.
+
+Hint: You have to make use of relationship for the Expectation and Variance. And the formula to compute the area of a disk is $\pi$r2(r means radius).
+
+The question suggested that the diameter of the disk follow the uniform distribution 
+within a specific interval of [c,d]. This suggest that the spread of the diameter
+is a continuous uniform distribution.
+
+The formula for both expectation and variance of continuous uniform distribution are
+
+E(D) = $\frac{d-c}{2}$ for continuous uniform distribution
+
+Var(D) = $\frac{(d-c)^2}{12}$ for continuous uniform distribution
+
+The general formula for variance includes expectation which is
+
+Var(D) = $E[D - E(D)]^2$ > $E[D^2] - (E[D])^2$
+
+To solve the question, expectation of the area is needed. The formula of a 
+circle area is
+
+$$ A = \pi R^2 = \frac{1}{4} \pi D^2$$
+
+The expectation of area is
+
+$$ E[A] = E[\frac{1}{4} \pi D^2] = \frac{1}{4} \pi E[D^2]   $$
+
+The value of  $E[D^2]$ is not the same as $(E[D])^2$ so to get the value of 
+$(E[D])^2$ the general formula of Var(D) needs to be used
+
+$$Var(D) = E[D^2] - (E[D])^2 $$
+
+$$ E[D^2] = Var(D) + (E[D])^2$$
+
+To get the value of $E[D^2]$ the formula of uniform distribution for variance
+and expectation is used therefore
+
+$$ E[D] = \frac{5+1}{2} = 3$$
+
+$$ Var[D] = \frac{(5-1)^2}{12} = \frac{16}{12} = \frac{4}{3}$$
+
+
+E[D] and Var[D] was found, to find $E[D^2]$
+
+$$ E[D^2] = Var(D) + (E[D])^2$$
+
+$$ E[D^2] = \frac{4}{3} + (3)^2 = \frac{31}{3}$$
+
+Enter $E[D^2]$ to the previous formula therefore
+
+$$ E[A] = \frac{1}{4} \pi E[D^2]  = \frac{31}{12}\pi $$
+Therefore the average/expected area of the disk is $\frac{31}{12}\pi$
+
+#Question 2  
+
+Given K $\sim$ N($\mu$ = 0, $\sigma^2$ = 1), i.e, K is Gaussian distributed, what’s the probability that the equation x 2 + Kx + 4 = 0 has real solutions? Hint: The solution to the quadratic
+equation ax2 + bx + c = 0 where a, b and c are real constants and x is unknown, 
+
+$$x = \frac{-b\frac{+}{-}\sqrt{b^2-4ac}}{2a}$$
+
+Provide your answer and your explanation here.
+
+K $\sim$ N($\mu$ = 0, $\sigma^2$ = 1)
+
+First enter the equation to the hint therefore
+
+$$x = \frac{-K\frac{+}{-}\sqrt{K^2-4*4}}{2}$$
+
+$$ 2x = -K\frac{+}{-}\sqrt{K^2-16} $$
+So that k can satisfy the equation k we remove k from the square root and let it
+be equal to 0 therefore
+
+$$K^2-16 = 0$$
+
+$$K = \frac{+}{-}4$$
+
+Therefore so that the result is not imaginary number k must be either higher
+or lower than 4, -4 <= K <= 4
+
+Because K $\sim$ N($\mu$ = 0, $\sigma^2$ = 1) emeans a normal distribution, Z table can be used to 
+get the probability of K being either +4 or -4.
+
+From the Z table the value of K <= 4 is 0.9997 and K <= -4 is 0.00003. 
+
+To make the value of 4 become K >= 4 then we transform it to 1 - 0.99997 therefore 
+K >= 4 = 0.00003
+
+Because the value of K cannot be either >= 4 or <= 4 at the same time, the probability
+is added up therefore
+
+The probability = 0.00003 + 0.00003 = 0.00006
+
+Therefore the probability that K has a real solution is 0.00006
+
+#Question 3  
+
+You toss 11 unfair coins where the chance of tossing a head is 0.75. What is the
+combined probability of getting exactly 4 or exactly 7 heads?
+
+Provide your answer and your explanation here.
+
+This question looks like a binomial distribution question therefore the formula used is
+
+$$\binom{n}{m}\theta^m(1-\theta)^(n-m)$$
+
+
+With $\theta$ as the probability, m as the desired result, and k as the number of tries
+
+The probability is 0.75 while the number of tries is 11 and the desired result is 
+either 4 / 7 head therefore
+
+For 4 heads
+
+$$\binom{11}{4}0.75^4(1-0.75)^(11-4)$$
+
+$$\frac{11!}{7!4!}0.75^4(1-0.75)^7 = 0.0063$$
+
+For 7 heads
+
+$$\binom{11}{7}0.75^7(1-0.75)^(11-7)$$
+
+$$\frac{11!}{4!7!}0.75^7(1-0.75)^4 = 0.1720$$
+
+The question asked about the combined probability therefore the two probability 
+values is summed up so 0.0063 + 0.1720 = 0.1783
+
+Therefore the combined probability of both getting 4 and 7 heads is 0.1783
+
+#Question 4  
+
+Given a random variable X with density function
+
+p(x)  
+
+(a + bx2 0 <= x <= 1
+(0      otherwise
+
+such that E[X] = 1/2. What’s the value of a and b?
+
+
+To answer this question we need to line up the formula that will be used which is
+
+E[X] = $\int_{a}^{b} x f(x)dx$
+
+Also because the 0 <= x <= 1 then the area for the f(x) = ax+b = 1 therefore
+
+$$1 = \int_{0}^{1} f(x)dx$$
+
+Because E[X] = $\frac{1}{2}$ we can infer that
+
+$$\frac{1}{2} = \int_{0}^{1} x f(x)dx$$
+
+With f(x) be ax + bx^2 so then
+
+$$\frac{1}{2} = \int_{0}^{1} (ax + bx^3)dx$$
+
+$$[\frac{bx^4}{4} +\frac{ax^2}{2}]^1_0 = \frac{1}{2}$$
+
+$$\frac{b}{4} + \frac{a}{2} = \frac{1}{2} $$
+
+$$ b + 2a = 2$$
+
+Then to solve the next equation
+
+$$[ax +\frac{bx^3}{3}]^1_0 = 1$$
+
+$$ a + \frac{b}{3} = 1$$
+
+$$ b = 3 - 3a$$
+Combine the two result we got therefore
+
+$$ 3-3a+2a = 2$$
+
+$$a = 1$$
+$$b = 0$$ 
+Therefore the value of a is 1 while the value of b is 0
+
+#Question 5
+
+Let Y1, Y2, . . . , Yk be independent, identically distributed random variables with
+common mean and variance. Find the values of a and b that will make the following formula true:
+
+$$E[(Y1 + Y2 + . . . + Y_k)^2] = a E[Y_k]^2 + b E[Y_k^2]$$
+
+To solve this problem we can see the pattern developed by the equation
+therefore let k be 1 for the left part so
+
+$$E(Y1)^2 = E[Y1^2] + 0E[Y1]^2$$
+
+Because the question told us that k be independent, identically distributed random variables
+with common mean and variance. It can be inferred that the mean won't change no matter
+how big k becomes. This means the covariance of this distribution is also 0. This
+means that the value of Yk will be the same no matter how big or small k becomes
+
+From that information therefore
+
+$$E(Y1)^2 = E[Y_k^2] + 0E[Y_k]^2$$
+
+Let k be = 2 therefore
+
+$$E(Y1 + Y2)^2 = E[(Y1^2 +Y2^2 +2Y1Y2)]$$
+
+Change 1, 2 to k therefore
+
+$$E(Y1+Y2)^2 = 2E[Y_k^2] + 2E[Y_k]^2$$
+
+Let k be = 2 therefore
+
+$$E(Y1 + Y2 + Y3)^2 = E[(Y1^2 +Y2^2 + Y3^2 +2Y1Y2 + 2Y1Y3 +2Y2Y3 )]$$
+Change 1, 2, 3 to k therefore
+
+$$E(Y1 + Y2 + Y3)^2 = 3E[Y_k^2] + 6E[Y_k]^2$$
+
+Let k be = 4 therefore
+
+$$E(Y1 + Y2 + Y3 + Y4)^2 = E[(Y1^2 +Y2^2 + Y3^2 + Y4^2 +2Y1Y2 + 2Y1Y3 
+\\ +2Y2Y3 +2Y1Y4 +2Y2Y4 +2Y3Y4 )]$$
+
+
+Change 1, 2, 3 to k therefore
+
+$$E(Y1 + Y2 + Y3 +Y4)^2 = 4E[Y_k^2] + 12E[Y_k]^2$$
+Therefore we got the value of a and b to be
+
+a = 0, 2, 6, 12
+
+b = 1, 2, 3, 4
+
+The formula needed to make this sequence be true is
+
+a = k(k-1) and b = k
+
+Therefore the value of a and b should be a = k(k-1) and b = k
+
+
+
+
+### Part 3 ###
+
+#This code chunk is to load the required library and read the csv file
+```{r}
+library(ISLR)
+library(MASS)
+library(tidyverse)
+
+data = read.csv('pmsm_temperature_data_A1_2022.csv')
+head(data)
+```
+
+#Question 1
+
+Obtain the basic statistical information like in Module 1 tutorial (e.g boxplot, summary,
+etc). Explain your observations based on your findings.[5 marks] Provide your answer and your
+explanation here.
+
+
+#This code chunk is used to get a summary of the data and to plot the box plot
+#of the data
+```{r}
+summary(data)
+
+boxplot(data[1:9],
+        main = "Boxplot of the data",
+         xlab = "Variable",
+         ylab = "Value")
+```
+
+To get the basic statistical information of the data, summary function and boxplot function was used. 
+
+From the summary it can be inferred that the range of the data value is from -3.32 to 3.01. Based from the mean and median, all of the data in all of the column is centered around 0. Disregarding the spread of the profile id which seems like the id number of the data itself. The spread of all the data for all column isn't that big.
+
+But the boxplot tells a very different story. From all 9 data, only 4 data which the spread is contained between it's 1st and 3rd percentile which is coolant, u_q, and motor_speed. Other 4 data has a lot of outliers especially torque, ambient, and i_q. u_d and pm only have outlier over the 3rd quartile range and i_d only have outlier below the 1st quartile range.
+
+Another interesting observation is that for motor_speed, the 1st quartile is the same as it's minimum value, indicating that there's a lot of data that have the same value of -1.2224. Also for i_d the data over the 3rd quartile is not that big with the 3rd quartile being 1.0291 and max being 1.0602
+
+#Question 2
+
+(b) Plotting the dataset to find associations (correlations) among variables. Present and discuss
+your findings from each of the plots. You can put your findings below the plots. [5 marks]
+Provide your answer and your explanation here.
+
+#This code chunk is used to plot the scatter plot and count the correlation value of
+#each pair of variables
+```{r}
+pairs(data[1:9])
+q2_cor = round(cor(data[1:9]),2)
+q2_cor
+```
+
+To make the scatter plot, the function pairs was used while cor was used 
+
+Barring some images and values, most of the scatter plot didn't make any line shape at all.
+Most of them either filled up the screen or make a wave. This implicates that the two
+variable doesn't have a linear correlation with each other
+
+The one that looks like have a correlation with each other is = 
+
+1. u_d and torque that looks like have a slanted hourglass shape. The correlation value
+for them is -0.83 which indicates that with one variable value going up, the other one
+goes down. The value is also close to 1 which implicates a strong correlation.
+
+2. u_d and i_q that looks like have a slanted hourglass shape. The correlation value
+for them is -0.81 which indicates that with one variable value going up, the other one
+goes down. The value is also close to 1 which implicates a strong correlation.
+
+3. u_q and motor_speed that looks like have a line but have a wave on top of the line.
+Although the shape of the datapoints does indicate it's a line going up, it's still
+have a wave on top of it which makes it quite ambiguous. The correlation value is
+0.8 which is quite high and indicates if one variable goes up the other also goes up.
+The problem is that the image itself doesn't look like a linear correlation shape.
+
+4. ambient and pm that although the image itself looks like someone splattered an ink
+on the paper, the correlation itself is 0.5 which indicates that when one of the variable
+goes up, the other also goes up. The correlation value still indicates a correlation since
+although the image doesn't indicate a line, the datapoint does look like it's moving to the
+top right which might make the calculation produce a number over 0.5
+
+5. motor_speed and i_d which have a correlation value of 0.77 but the image itself doesn't
+indicates a line. This is a case although the value indicates a strong relationship, the image 
+of the datapoint itself doesn't look like both variable has a correlation.
+
+6. torque and i_q which has a straight line image and a correlation value of 1. Both of these
+variable has a maximum correlation value and a straight line image which indicate that
+both of these variable are really correlated with each other. This indicates that if one
+of the variable goes up, the other also goes up.
+
+

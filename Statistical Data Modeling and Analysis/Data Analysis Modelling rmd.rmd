@@ -1,0 +1,483 @@
+---
+title: "Assessment 2 Term4 2023"
+author: "ITI5197 Teaching Team"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+# ITI5197 Assessment 2
+
+## Parameter Estimation, Confidence Interval, Hypothesis Testing, Data Mining Models
+
+### Student Name: Eddy
+
+### Student Number: 33495068
+
+## Objectives
+This assignment assesses your understanding of Confidence Interval, Hypothesis Testing, and Data Mining Models, covered in Weeks 3 to 5. The total marks of this assessment is __80__, including __5__ marks account for the presentation. This assessment has 30% contribution to your final score.
+
+
+## Important Note
+* You can complete your assignment using the codes shared in the unit (i.e. video, practical activities on Moodle) and this template as the bases. However, <font color='red'>**you should make sure the codes you are using are correct and relevant to the question**</font>.
+
+* Please follow the structure of this template as much as you can.
+
+* You can use the pre-populated codes cells or change them if you prefer. However, please <font color='red'>**do not change the name of the key variables, functions, and parameters**</font>. It helps us to read and understand your submission more efficiently.
+
+* Submit your source code file in R notebook (this file with your answers) and a preview file (HTML or PDF or MS Word). If the marker has problems to run your source codes, the preview file will be helpful. 
+
+
+\newpage
+
+## Part 1: Point Estimation [10 marks]
+
+#### Question 1: (10 Marks)
+Suppose that we know that a random variable $X$ follows the distribution given below:
+
+$$
+\text{PDF}\left(X=x|\theta\right)= \frac{{2 \choose x - 2}\theta^{x-2}\left(1-\theta\right)^{4-x}}{1-\left(1-\theta\right)^2}, \; x= \{3,4\}
+$$
+
+Imagine that we observe a sample of $\textbf{n}$ [i.i.d](https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables) random variables $\mathbf{x}=$ $\left(x_{1}, \ldots, x_{n}\right)$ and want to model them using this distribution. Please use the concept of maximum likelihood to estimate for the parameter $\theta$. 
+
+<font color='blue'> Provide your answer and your explanation here.</font>
+
+$$
+\text{To estimate}\ \theta \text{ with maximum likelihood, the formula for maximum likelihood is used here which is}\\
+\hat{\theta}_{MLE} = \text{argmax}P(y|\theta)\\
+= \prod_{i=1}^{n}P(y|\theta)\\
+\text{substitute the equation from the question to the}P(y|\theta)\\
+= \prod_{i=1}^{n}\frac{{2 \choose x - 2}\theta^{x-2}\left(1-\theta\right)^{4-x}}{1-\left(1-\theta\right)^2}\\
+= \prod_{i=1}^{n}\frac{\frac{2}{(2-(xi-2))!(xi-2)!}\theta^{x-2}\left(1-\theta\right)^{4-x}}{1-\left(1 - 2\theta +\theta^2\right)}\\
+= \prod_{i=1}^{n}\frac{\frac{2}{(4-xi)!(xi-2)!}\theta^{x-2}\left(1-\theta\right)^{4-x}}{2\theta +\theta^2}\\
+\text{Simplify the equation further with the concept of }(\theta^\left(x1-2\right))*(\theta^\left(x2-2\right))*...(\theta^\left(xn-2\right))= (\theta^\left(\Sigma_x-2n\right)) >\text{apply to the equation}\\
+= \frac{\theta^\left(\Sigma_xi-2n\right)(1-\theta)^\left(4n-\Sigma_{xi}\right)}{(2\theta - \theta^2)^n}
+\prod_{i=1}^{n}\frac{2}{(4-x_i)!(x_1-2)!}\\
+\text{We use negative logarithmic transformation to simplify solving the equation, therefore}\\
+L(X|\theta) = -\log(\frac{\theta^\left(\Sigma_xi-2n\right)(1-\theta)^\left(4n-\Sigma_{xi}\right)}{(2\theta - \theta^2)^n}
+\prod_{i=1}^{n}\frac{2}{(4-x_i)!(x_1-2)!})\\
+= -\log\theta^\left(\Sigma_xi-2n\right) - \log(1-\theta)^\left(4n-\Sigma_{xi}\right) + \log(2\theta - \theta^2)^n 
+-\log(\prod_{i=1}^{n}\frac{2}{(4-x_i)!(x_1-2)!})\\
+\text{We use logarithmic rules to simplify the equation further, therefore}\\
+= \left(-\Sigma_xi+2n\right)(\log\theta) - \left(4n-\Sigma_{xi}\right)(\log(1-\theta)) + (n)(\log(2\theta-\theta^2))
+-\log(\prod_{i=1}^{n}\frac{2}{(4-x_i)!(x_1-2)!})\\
+$$
+$$
+\text{To derive the maximum we use the first derivative concept where the max/min is equal to } 
+\frac{dL(\theta)}{d\theta} = 0 \text{, Therefore}\\
+\frac{dL(\theta)}{d\theta} = \frac{d}{d\theta}\left(-\Sigma_xi+2n\right)(\log\theta) - \left(4n-\Sigma_{xi}\right)(\log(1-\theta)) + (n)(\log(2\theta-\theta^2))-\log(\prod_{i=1}^{n}\frac{2}{(4-x_i)!(x_1-2)!}) = 0 \\
+= \left(-\Sigma_xi+2n\right)(\frac{1}{\theta}) + \left(4n-\Sigma_{xi}\right)(\frac{1}{1-\theta})
++(n)\left(\frac{2\theta - 2}{\theta^2 - 2\theta}\right) = 0 \\
+= \frac{\left(-\Sigma_xi+2n\right)(1-\theta)}{(\theta)(1-\theta)} + \frac{\left(4n-\Sigma_{xi}\right)(\theta)}{(\theta)(1-\theta)} + (n)\left(\frac{2\theta - 2}{\theta^2 - 2\theta}\right) = 0 \\
+= \frac{\left(-\Sigma_xi+2n\right)(1-\theta) + \left(4n-\Sigma_{xi}\right)(\theta)}{(\theta-\theta^2)} = - (n)\left(\frac{2\theta - 2}{\theta^2 - 2\theta}\right)\\
+=\left(-\Sigma_xi+2n\right)(1-\theta) + \left(4n-\Sigma_{xi}\right)(\theta) = \frac{-(2n)(\theta)(\theta - 1)}{(\theta)(\theta-2)}(\theta)(1-\theta)\\
+= 2n - 2n\theta - \Sigma_{i=1}^{n}x_i + \theta\Sigma_{i =1}^{n}x_i + 4n\theta - \theta\Sigma_{i=1}^{n}x_i = -\frac{(2n)(1 - \theta)^2}{(2 - \theta)}\\
+= 2n + 2n\theta - \Sigma_{i=1}^{n}x_i = -\frac{(2n)(1 - \theta)^2}{(2 - \theta)}\\
+= 2n(1 + \theta) + \frac{(2n)(1 - \theta)^2}{(\theta-2)} = \Sigma_{i=1}^{n}x_i\\
+= \frac{2n((1 + \theta)(2 - \theta)+(1-\theta)^2)}{(2 - \theta)} = \Sigma_{i=1}^{n}x_i\\
+= \frac{((2 + \theta - \theta^2)+(1 - 2\theta +\theta^2))}{(2 - \theta)} = \frac{1}{2n}\Sigma_{i=1}^{n}x_i\\
+\text{We use the concept of MLE where } \bar{x} = \frac{1}{n}\Sigma_{i=1}^{n}x_i \text{ So we substitute it to the equation and simplifying the left}\\
+= \frac{3 - \theta}{2-\theta} = \frac{1}{2}\bar{x}\\
+= \frac{\theta}{2}\bar{x} - \theta = \bar{x} - 3\\
+= \theta(\frac{\bar{x}}{2} - 1) = \bar{x} - 3\\
+= \theta = \frac{2\bar{x} - 6}{\bar{x}-2}\\
+\text{From the calculation we got that the MLE is } \hat{\theta}_{MLE} =  \frac{6 - 2\bar{x}}{2 - \bar{x}}
+$$
+
+Therefore we got that the MLE is $\hat{\theta}_{MLE} =  \frac{6 - 2\bar{x}}{2 - \bar{x}}$ with the mean of the events being the part of the MLE. The probability space from the question is either 3 or 4. We can infer that from n number of events, m is the number that (3) happened then n-m is the number that (4) happened. Therefore we can get $\bar{x}$ with mean calculation
+
+$$
+\bar{x} = \frac{3m + 4(n-m)}{n} \\
+=4 - \frac{m}{n}
+$$
+
+With the $\bar{x}$ is found, we can substitute it to the  $\hat{\theta}_{MLE}$ therefore
+
+$$
+\hat{\theta} = \frac{6 - 2\bar{x}}{2 - \bar{x}} \\
+= \frac{6 - 2\left(4 - \frac{m}{n}\right)}{2 - \left(4 - \frac{m}{n}\right)}\\
+= \frac{-2 + 2\frac{m}{n}}{-2 + \frac{m}{n}}\\
+= \frac{\frac{-2n+2m}{n}}{\frac{-2n + m}{n}}\\
+= \frac{-2n+2m}{-2n + m} \\
+\hat{\theta} = \frac{2(m-n)}{m-2n}
+$$
+To satisfy the condition we mentioned above where m is equal to the number of 3 happenend and n-m is equal to the number of 4 happened. The domain to satisfy $\hat{\theta}$ is
+
+$$
+\hat{\theta} = \frac{2(m-n)}{m-2n} \text{ where}\\
+0 \le m \le n , 0 < n < \infty, \text{ with } m \in Z, n \in Z
+$$
+## Part 2: Central Limit Theorem  [15 marks]
+
+
+#### Question 1 (8 Marks)
+
+Someone wants to investigate the subscription rate ***p*** of Netflix in Monash University, and they take the average frequency of all surveyed people as an estimate $\hat{p}$ for ***p***. Now it is necessary to ensure that there is at least 85% certainty that the difference between the surveyed rate $\hat{p}$ and the actual rate ***p*** is not more than 10%.  How many people at least should take the survey?
+
+<font color='blue'> Provide your answer and your explanation here.</font>
+
+$$
+\text{The formula to count confidence interval (CL)}\\
+CL = \hat{\mu} \pm Z_{a/2}*\frac{\sigma}{\sqrt{n}}\\
+\\
+\text{From the formula, the right handed side is the calculation for the error therefore the formula for the error (E) is}\\
+E = Z_{a/2}*\frac{\sigma}{\sqrt{n}}\\
+\\
+\text{Then modify the formula}\\
+\sqrt{n} = \frac{Z_{a/2}}{E}*\sigma\\
+n = (\frac{Z_{a/2}}{E})^2 * \sigma^2\\
+\sigma^2 = VAR[X] \text{ therefore}\\
+n = (\frac{Z_{a/2}}{E})^2 * VAR[X]\\
+\\
+\text{We use binomial concept for VAR [X] which is } p(1-p) \text{ then assume the p = 0.5 to reach the biggest n therefore}\\
+n = (\frac{Z_{a/2}}{E})^2 * p(1-p)\\
+\text{To get the }Z_{a/2}\text{ we use the Z which is 85%, therefore the alpha is (1 - 0.85 = 0.15)}\\
+\text{Therefore the }Z_{a/2}\text{ is }Z_{0.075} \text{with R we got the value is  1.44}\\
+\text{From the question, the error is at least not more than 0, so we can assume that the error is } \le \text{10% } \text{E = 0.1 Therefore}\\
+\\
+n = (\frac{1.44}{0.1})^2 * (0.5(1-0.5))\\
+n = (\frac{1.44}{0.1})^2 * \frac{25}{100} = 51.84\\
+\text{Rounding up the number to the nearest integer, we got 52 people}\\
+\text{Therefore we need at least 52 people to get an Error not more than 10%}
+$$
+
+#### Question 2 (7 Marks)
+
+In Module 2, we mentioned the use of the weak law of large numbers which tells us that the sample estimator will converge to the population parameter if we have sufficiently large number of observations (or sample size). In this question, we would like to see how big the sample size should be in order to get the approximation error down to a certain level.
+
+Assuming that we have a [Binomial random variable](https://en.wikipedia.org/wiki/Binomial_distribution) $X \sim \text{Bin}(n, 0.65)$, what is the smallest sample size $\textbf{n}$ such that
+$$
+P\left(\left|\frac{X}{n} - 0.65\right| >0.1\right) < 0.01
+$$
+<font color='blue'> Provide your answer and your explanation here.</font>
+
+$$
+\text{Weak law of large numbers / Chebyshev's inequality is } P(|X - \mu|\ge k\sigma) \le \frac{1}{k^2}\\
+\text{Rearrange the formula to match the question, therefore divide it by n}\\
+P(|\frac{X}{n} - \frac{\mu}{n}|\ge \frac{k\sigma}{n}) \le \frac{1}{k^2}\\
+\text{The formula for }\mu \text{ in binomial distribution is }\mu = n*p \text{ with B ~ (n,p)}\\
+\text{From the question we got that B ~ (n,p) is B ~ (n,0.65) therefore } \mu = n0.65\\
+\text{insert it to the formula}\\
+P(|\frac{X}{n} - \frac{n0.65}{n}|\ge \frac{k\sigma}{n}) \le \frac{1}{k2}\\
+P(|\frac{X}{n} - 0.65|\ge \frac{k\sigma}{n}) \le \frac{1}{k^2}\\
+P(|\frac{X}{n} - 0.65|\ge 0.1) \le 0.01\\
+\\
+$$
+
+Because the formula already matched the conditions provided then we can extract sigma and k which is
+
+$$
+\frac{1}{k^2} = 0.01\\
+k^2 = 100\\
+k = 10, \text{therefore k is 10}\\
+\text{Using the k that we just found, now to calculate }\sigma\\
+\frac{k\sigma}{n} = 0.1\\
+\frac{10\sigma}{n} = 0.1\\
+\sigma = 0.01n\\
+\text{From the question we knew that the variance is 0.65 = }\sigma^2 \text{so to find }\sigma^2\\
+\sigma^2 = 10^{-4}n^2
+$$
+
+Then because we already found $\sigma^2$ which is the variance, we can use binomial distribution variance formula to find n which is VAR = np(1-p)
+
+$$
+\sigma^2 = VAR = np(1-p)\\
+\text{We know that p is 0.65 from the question therefore}\\
+10^{-4}n^2 = n0.65(1-0.65)\\
+n = 0.65(0.35)(10^4) = 2275
+$$
+
+Therefore from the calculation we need at least 2275 people to satisfy
+
+$$
+P\left(\left|\frac{X}{n} - 0.65\right| >0.1\right) < 0.01
+$$
+
+## Part 3: Confidence Interval Estimation & Hypothesis Testing  [25 marks]
+
+Suppose you are a technical data analyst for a rally car team. There are two brands of engine oil in your warehouse, namely Shell and Speedline. Your team conducted 40 experiments for each brand to test the length of time they can keep the racing engine working normally. The data has been saved in the csv file, **Engine_oil_info.csv**. Please note that the first two columns are about Shell and Speedline, while the last column is about Castrol, new engine oil that your team wants to buy but has not yet decided on. We assume the samples are distributed as per Gaussian.
+
+P.S. $\mu_1$ is for mean of Shell working hours; $\mu_2$ is for mean of Speedline working hours; $\mu_3$ is for Castrol working hours.
+
+#### Question 1 (5 Marks)
+You want to analyse the working hours for both Shell and Speedline. Determine 99 percent two-sided confidence intervals for both Shell $\mu_1$ and Speedline $\mu_2$. Also explain what does a 99% confidence interval mean? What will the range of the confidence interval look like when the sample size increases and why? Can you also relate this observation to the weak law of large numbers?
+
+<font color='blue'> Provide your answer and your explanation here.</font>
+
+$$
+\text{To determine the two sided confidence intervals with 99% CL we use the CI formula}\\
+\text{Because the population variance is not known, then student T test variation of the formula is used}\\
+\text{Formula for the Confidence Interval for student T test = } (\hat{\mu}_{ML} - t_{(\alpha /2,n-1)}\frac{\hat{\sigma}\mu}{\sqrt{n}},\hat{\mu}_{ML} + t_{(\alpha /2,n-1)}\frac{\hat{\sigma}\mu}{\sqrt{n}})\\
+\text{To find alpha we use the formula (1 - CL) CL = Confidence Level (99%)}\\
+\text{To use the formula, the mean, std, n is needed. The value is gotten from excel which is }\\
+\mu 1 = 322.75 , \mu 2 = 329.51, \sigma 1 = 22.43, \sigma 2 = 19.77, n_{1,2} = 40\\
+\alpha = (1-99) = 0.01\\
+\text{Finding out the Confidence Interval for Shell using the formula}\\ 
+\text{The student T test value is 0.05 with 39 degree of freedom = 2.71}\\
+(322.75- (2.71)\frac{22.43}{\sqrt{40}},322.75 + (2.71)\frac{22.43}{\sqrt{40}})\\
+313.14, 332.36\\
+\text{Therefore, the range for data 1, Shell is }313.14 \le x \le 332.36\\
+\text{Finding out the Confidence Interval for Speedline using the formula}\\ 
+\text{The student T test value is 0.05 with 39 degree of freedom = 2.71}\\
+(329.51- (2.71)\frac{19.77}{\sqrt{40}},329.51 + (2.71)\frac{19.77}{\sqrt{40}})\\
+321.04, 337.97\\
+\text{Therefore, the range for data 2, Speedline is }321.04 \le x \le 337.97\\
+\\
+\text{99% confidence intervals mean that we can 99% confidently says that if we get a random sample of the data.}\\ 
+\text{It will be on the range of the interval which Shell is }313.14 \le x \le 332.36\\
+\text{and for Speedline is }321.04 \le x \le 337.97\\
+\text{The next question what happens if the sample size increase. Sample size is n, and from the equation alone which is }\\
+(\hat{\mu}_{ML} - t_{(\alpha /2,n-1)}\frac{\hat{\sigma}\mu}{\sqrt{n}},\hat{\mu}_{ML} + t_{(\alpha /2,n-1)}\frac{\hat{\sigma}\mu}{\sqrt{n}})\\
+$$
+We can see that the n is the denominator, therefore with bigger n the error will decrease so the interval for the Confidence Interval will be shorter. The relation of this observation with the weak law of large number is that with a big enough sample size (n), the data will be closer to the expected value which in this case is (Shell = 322.75 and Speedline 329.51). This is also can be seen with raising the number of n lowering the error which in turns also reduce the intervals. This is the proof of the weak law of large number.
+
+#### Question 2 (7 Marks)
+You want to know which engine oil works longer. Determine a 99 percent two-sided confidence interval for $\mu_1-\mu_2$, and explain your opinion based on your calculations which oil works longer, Shell or Speedline. Please note we assume $\sigma_1=\sigma_2$.
+
+<font color='blue'> Provide your answer and your explanation here.</font>
+
+$$
+\text{To determine two-sided confidence interval with }\sigma_1=\sigma_2\text{ we can assume that the formula for }Sp^2\text{ is}\\
+Sp^2 = \frac{(n_{1}-1)*S_{1}^2 + (n_{2} - 1)*S_{2}^2}{n_{1}+n_{2}-2}\\
+S_{1} = 22.43 | S_{2} = 19.77 | n_{1}=n_{2}=40\\
+Sp^2 = \frac{(40-1)*(22.43)^2 + (40 - 1)*(19.77)^2}{40+40-2} = 447.20\\
+\text{The formula for calculating the two-sided confidence interval with }\sigma_1=\sigma_2\text{ is}\\
+CI = (\hat{\mu}_{1} - \hat{\mu}_{2})\pm t(\frac{\alpha}{2},n_{1}+n_{2}-2)*Sp\sqrt{\frac{1}{n_{1}}+\frac{1}{n_{2}}}\\
+\text{Use the value from the previous question, therefore}\\
+\mu 1 = 322.75 , \mu 2 = 329.51, n_{1,2} = 40\\
+\text{The student T test value for this (with 78 degree of freedom)} t(0.05,78) = 2.64\\
+CI = (322.75 - 329.51) \pm (2.64)(\sqrt{447.20}(\sqrt{\frac{1}{40}+\frac{1}{40}}))\\
+=-6.83 \pm 12.48\\
+= -19.3 \le x \le 5.66\\
+\text{We can see that from the confidence interval, there's a skew on the right.}\\ 
+\text{We can confidently say that shell works longer than Speedline}\\
+$$
+The reason for this is that from the computation, we can see that there's a skew on the right which means that the bell curve will be bigger on the left side. This means that there are more datapoint on the left side. We already make the assumption that the leftside is the side for shell so this means that there are more shell data point than speedline so shell > speedline. Therefore we can make the conclusion that we can confidently say that shell works longer than speedline.
+
+#### Question 3 (5 Marks)
+According to Monash University Rally regulation, only when the engine oil's working hours is greater than or equal to 340 hours, this engine oil can be used in this rally. You need to do a hypothesis testing to see whether Speedline is qualified for this rally. You have null hypothesis $H_0: \mu_2 \ge 340$. Write down the alternative hypothesis and report the findings of your hypothesis test based on the significance level 0.05 (Answer should include whether Speedline is qualified for the Monash University Rally).
+
+<font color='blue'> Provide your answer and your explanation here.</font>
+
+First we define the H0 (null hypothesis) and H1 (alternative hpothesis)
+$H_0: \mu_2 \ge 340$ which translate to the speedline can work greater than or equal to 340 hour. Therefore the H1 is
+$H_1: \mu_2 < 340$ which translate to the speedline oil cannot work greater than 340 hour.
+
+$$
+\text{Define the formula for hypothesis testing which is}\\
+t_\hat{\mu} = \frac{\hat{\mu} - \mu_o}{(\frac{S}{\sqrt{n}})}\\
+\text{We already know the }\hat{\mu}\text{ which is 329.51. The S = }\sigma \text{= 19.77 and n = 40, enter it to the formula therefore}\\
+t_\hat{\mu} = \frac{329.51 - 340}{(\frac{19.77}{\sqrt{40}})} = -3.35\\
+\text{The question asked for a one tail hypothesis test with H0}\ge\text{ therefore, we use}\\
+P(T<t_\hat{\mu}) = P(T<-3.35)\\
+\text{Using R to count the p-value (pt(-3.35,39)) yield the result of 0.000901}\\
+$$
+Compare it with the significance level of 0.05, we got 0.000901 < 0.05. This value is smaller than 0.05 so we have enough evidence to reject H0. The meaning of rejecting H0 then we have enough evidence to accept the alternative hypothesis. We can say that we have strong evidence that speedline is not qualified.
+
+#### Question 4 (8 Marks)
+
+Your team manager wants to buy Castrol engine oil because it is much cheaper than Shell and Speedline. But your team engineer believes that Castrol’s working hours are less than or equal to 340. Remove outlier(s) for Castrol data and do the hypothesis testing $H_0: \mu_3 \le 340$. Do you think your team engineer's statement is true? Report your findings based on the hypothesis testing with significance level 0.05.
+
+<font color='blue'> Provide your answer and your explanation here.</font>
+
+To find the outlier, first we plot the data with boxplot to see the outlier.
+```{r warning= FALSE, eval=FALSE}
+library(tidyverse)
+oil <- read.csv("Engine_oil_info.csv")
+boxplot(oil$Castrol)
+
+#From the boxplot we knew that the outlier is above the 360 number so filter them out
+oil.new <- filter(oil, Castrol <= 360)
+mean(oil.new$Castrol)
+nrow(oil.new)
+sd(oil.new$Castrol)
+```
+
+Therefore we got that the mean = 339.47, std = 8.55, and total n = 37
+
+$$
+\text{Define the formula for hypothesis testing which is}\\
+t_\hat{\mu} = \frac{\hat{\mu} - \mu_o}{(\frac{S}{\sqrt{n}})}\\
+\text{We already know the }\hat{\mu}\text{ which is 339.47. The S = }\sigma \text{= 8.55 and n = 37, enter it to the formula therefore}\\
+t_\hat{\mu} = \frac{339.47 - 340}{(\frac{8.55}{\sqrt{37}})} = -0.377\\
+\text{The question asked for a one tail hypothesis test with H0}\le\text{ therefore, we use}\\
+1 - P(T<t_\hat{\mu}) = 1 - P(T<-0.377)\\
+\text{Using R to count the p-value (pt(-0.377,36)) yield the result of 0.35}\\
+$$
+
+Compare it with the significance level of 0.05, we got 0.35 > 0.05. This value is bigger than 0.05 so we don't have enough evidence to reject H0. The meaning of this conclusion is that we don't have enough evidence to make a conclusion so we can't say that Castrol is qualified or not therefore we can't say that our team engineer statement is true or not and more research is needed to make better conclusion.
+
+\newpage
+## Part 4: Linear Regression Model [25 marks]
+
+After 1000 years, due to human activities, the earth’s ecology has been irreversibly destroyed; hence, the earthlings seek to emigrate to a new earth-like planet, [**Kepler 22b**](https://en.wikipedia.org/wiki/Kepler-22b). **Kepler 22b** (also known as Kepler Target Object KOI-087.01) is an exoplanet that orbits in the habitable zone of the sun-like star Kepler 22. It is located in the constellation Cygnus, about 600 light years (180 pc) from Earth, and was discovered by [NASA's Kepler Space Telescope](https://en.wikipedia.org/wiki/Kepler_space_telescope) in December 2011. 
+
+In $3011$, humans discovered that this planet has a composition similar to that of the earth and the water on which all animals and plants depend. Later, scientists conducted many field studies and proposed that we can migrate to this planet, with the migration process starting as soon as $3030$. Humanity has since built many cities on Kepler 22b and completed the migration process by $3100$ using the technological advanced ultra-high-speed space shuttle .
+
+Suppose that you live in $4118$, and are one of the many data scientists working on the **Kepler 22b** climate problem. After many expansions made on the planet, mankind wants to prevent **Kepler 22b** from repeating the same mistakes as that of the earth; thus, a tremendous amount of resources has been put towards the study of the sulfur dioxide level ($\textbf{SO}_2$) on **Kepler 22b** because high $\textbf{SO}_2$ levels cause acid rain. 
+
+
+You have been provided with two datasets, ```Regression_train.csv```, and ```Regression_new.csv```. Using these datasets, you hope to build a model that can predict the $\textbf{SO}_2$ level on this new planet using other variables. ```Regression_train.csv``` and ```Regression_new.csv``` come with the ground-truth target label $\textbf{SO}_2$.
+
+The information of the attributes for these datasets can be found below:
+- **year**: year of data in this row </br>
+- **month**: month of data in this row </br>
+- **day**: day of data in this row </br>
+- **hour**: hour of data in this row </br>
+- **PM2.5**: [PM2.5](https://en.wikipedia.org/wiki/Particulates) concentration ($ug/m^3$) </br>
+- **PM10**: PM10 concentration ($ug/m^3$) </br>
+- **NO2**: [NO2](https://en.wikipedia.org/wiki/Nitrogen_dioxide) concentration ($ug/m^3$) </br>
+- **CO**: [CO](https://en.wikipedia.org/wiki/Carbon_monoxide) concentration ($ug/m^3$) </br>
+- **TEMP**: temperature (degree Celsius).</br>
+- **O3**: [O3](https://en.wikipedia.org/wiki/Ozone) concentration ($ug/m^3$) </br>
+- **PRES**: pressure (hPa) </br>
+- **DEWP**: [dew point temperature](https://en.wikipedia.org/wiki/Dew_point) (degree Celsius) </br>
+- **RAIN**: [precipitation](https://en.wikipedia.org/wiki/Precipitation) (mm) </br>
+- **wd**: wind direction </br>
+- **WSPM**: wind speed (m/s) </br>
+- **station**: name of the air-quality monitoring site</br>
+- $\textbf{SO}_2$: [SO2](https://en.wikipedia.org/wiki/Sulfur_dioxide) concentration ($ug/m^3$) </br>
+
+#### Question 1 (5 marks)
+Please load the ```Regression_train.csv``` and fit a [$\textbf{multiple linear regression model}$](https://en.wikipedia.org/wiki/Linear_regression) with $\textbf{SO}_2$ being the target variable. According to the summary table, which predictors do you think are possibly associated with the target variable (use the significance level of 0.01), and which are the **Top 10** statistical significance predictors? Please write an R or Python script to automatically fetch and print this information.
+
+**NOTE**: Manually doing the above tasks will result in 0 marks.
+
+```{r}
+# ANSWER BLOCK
+
+# Read in the data here
+train <- read.csv("Regression_train.csv")
+
+# Build the multiple linear regression model here
+lm.fit <- lm(SO2 ~ .,train) 
+
+# Get the summary of the model here
+fit.summary <- summary(lm.fit)
+
+# Write the function to get the important predictors as well as the top 10 strongest predictors:
+top.predictors <- function(fit.summary){
+    
+    # Getting the important predictors
+    coef.imp <- rownames(fit.summary$coefficients[fit.summary$coefficients[,4]<0.01,])
+    # Getting the top 10 predictors
+    coef.most <- rownames(fit.summary$coefficients[order(fit.summary$coefficients[,4]<0.01),])[1:10]
+    
+    # Printing out the results, you can keep this format or make some format that looks better
+    print(paste("The important features are: ", coef.imp))
+    print(paste("The top 10 most important features are: ", coef.most))
+}
+
+#Adding code to call the variable and function to answer the question
+#According to the summary table, which predictors do you think are possibly associated with the target variable (use the significance level of 0.01), and which are the **Top 10** statistical significance predictors? Please write an R or Python script to automatically fetch and print this information
+
+top.predictors(fit.summary)
+```
+
+
+#### Question 2 (5 Marks)
+Rather than calling the ```lm()``` function, you would like to write your own function to do the [least square](https://en.wikipedia.org/wiki/Least_squares) estimation for the simple linear regression model parameters $\boldsymbol{\beta_0}$ and $\boldsymbol{\beta_1}$. The function takes two input arguments with the first being the dataset name and the second the predictor name, and outputs the fitted linear model with the form: $$\textbf{E}[\textbf{SO}_2]=\hat{\beta}_{0}+\hat{\beta}{_1}x$$ 
+
+Code up this function in R or Python and apply it to the two predictors **TEMP** and **CO** separately, and explain the effect that those two variables have on $\textbf{SO}_2$.
+
+
+```{r}
+# ANSWER BLOCK
+
+# Least squared estimator function
+lsq <- function(dataset, predictor){
+    # INSERT YOUR ANSWER IN THIS BLOCK
+    
+    # Get the final estimators
+    beta_1 <- (mean(dataset[[predictor]]*dataset$SO2) - mean(dataset[[predictor]])*mean(dataset$SO2))/
+  (mean((dataset[[predictor]])^2)-(mean(dataset[[predictor]]))^2)
+    beta_0 <- (mean(dataset$SO2)*mean((dataset[[predictor]])^2) - mean(dataset$SO2*dataset[[predictor]])*mean(dataset[[predictor]]))/(mean((dataset[[predictor]])^2)-(mean(dataset[[predictor]]))^2)
+    
+    # Return the results:
+    return(paste0('E[SO2]=', beta_0,'+', beta_1,'*',predictor))
+}
+print(lsq(train, 'TEMP'))
+print(lsq(train, 'CO'))
+```
+So with TEMP as the predictor, the intercept (BO) for SO2 is 23.37 means that when the value of TEMP is 0, SO2 will have a value of 23.37. With an increase of 1 unit of TEMP, SO2 will increase by -0.59. This means that these two variables have a negative relationship. (When TEMP is increasing, SO2 will decrease)
+
+So with CO as the predictor, the intercept (BO) for SO2 is 3.66 means that when the value of CO is 0, SO2 will have a value of 3.66. With an increase of 1 unit of CO, SO2 will increase by 0.01. This means that these two variables have a positive relationship. (When CO is increasing, SO2 will increase)
+
+#### Question 3 (2 Mark)
+[**R squared**](https://en.wikipedia.org/wiki/Coefficient_of_determination) from the summary table reflects that the full model doesn't fit the training dataset well; thus, you try to quantify the error between the values of the ground-truth and those of the model prediction. You want to write a function to predict $\textbf{SO}_2$ with the given dataset and calculate the [root mean squared error (rMSE)](https://en.wikipedia.org/wiki/Root-mean-square_deviation) between the model predictions and the ground truths. Please test this function on the full model and the training dataset.
+
+
+
+```{r}
+# ANSWER BLOCK
+
+rmse <- function(model, dataset){
+    
+    return(sqrt(sum((dataset$SO2 - predict(model,dataset))^2)/nrow(dataset)))
+}
+print(rmse(lm.fit,train))
+```
+
+
+#### Question 4 (4 Mark)
+You find the full model complicated and try to reduce the complexity by performing [bidirectional stepwise regression](https://en.wikipedia.org/wiki/Stepwise_regression) with [BIC](https://en.wikipedia.org/wiki/Bayesian_information_criterion). Please briefly explain what forward stepwise regression does in less than 100 words.
+
+Calculate the **rMSE** of this new model with the function that you implemented previously.
+
+```{r}
+# ANSWER BLOCK
+
+sw.fit <- step(lm.fit, direction = 'both', k = log(length(train)))
+
+summary(sw.fit)
+
+print(rmse(sw.fit, train))
+```
+
+Forward Stepwise regression is one of the methods in stepwise regression which automatically choose the predictive variable. Forward Stepwise is done by choosing the featured variable at first by a set of hurdles (usually concerning p-value). Then other variables that reduce the SSE the most is chosen if it satisfies the hurdle. This is done repeatedly until no variable can reduce SSE/passes the hurdle. Also, no variable will ever be removed from the model which is also the flaw in the method. This way the method cannot consider other better combinations since it cannot remove any variables in the model. 
+
+#### Question 5 (4 Marks)
+You have been given a new dataset ```Regression_new.csv``` that has the latest data of **Kepler 22b**. You are going to apply the new model ```sw.fit``` on the new dataset to evaluate the model performance with using **rMSE**. When you look into **rMSE**, what do you find? If you think ```sw.fit``` works well on ```Regression_new.csv```, please explain why it does well. Otherwise, if you think your model ```sw.fit``` doesn't perform well on ```Regression_new.csv```, can you point out the potential reason(s) for this?
+
+```{r}
+# ANSWER BLOCK
+new <- read.csv("Regression_new.csv") # Reading in the new dataset
+print(rmse(sw.fit, new)) # Finding out the rMSE of the sw.fit model with respect to the new dataset
+```
+From the RMSE it looks like the model doesn't work well on the new data. This could be because of overfitting. When looking at the RMSE of the test, the score is around 14 which is quite low. This is indicating of a low variance and a low variance means that potentially the model fits the training data too much. Because the model fits the training data too much, it can't account for the variance that is found in the new data so it looks like the cause of the model doesn't work well on the new data is because of overfitting.
+
+#### Question 6 (5 Marks)
+Although stepwise regression has reduced the model complexity significantly, the model still contains a lot of variables that we want to remove. Therefore, you are interested in lightweight linear regression models with ONLY TWO predictors. Write a script to automatically find the best lightweight model which corresponds to the model with the least **rMSE** on the training dataset (Not the new dataset). Compare the **rMSE** of the best lightweight model with the **rMSE** of the full model - ```lm.fit``` - that you built previously. Give an explanation for these results based on consideration of the predictors involved.
+
+```{r}
+# ANSWER BLOCK
+
+# Some variables that you would want to initialize
+minimum_error <- Inf
+features <- c()
+
+# CODE HERE
+
+variable <- names(subset(train, select = -SO2))
+variable
+
+for (a in 2:length(variable)) {
+  for(b in 1:(a-1)){
+    test <- lm(as.formula(paste("SO2 ~", variable[a], "+", variable[b])), data = train)
+    if (rmse(test, train) < minimum_error){
+      minimum_error <- rmse(test, train)
+      features <- c(variable[a], variable[b])
+    }
+  }
+  
+}
+
+print(paste('The best features are', features[1], 'and', features[2], '; and the MSE is', minimum_error))
+```
+The RMSE of the model with 2 variables is 17.07 while the RMSE of the model with all the variables is 14.99. We can see that the RMSE of the model with all the variables is still lower than the model with 2 variables. This happened because of the way the RMSE work. RMSE is sensitive to overfitting, which means that it will decrease the more independent variable you add to the model which what happened in this case. No matter how unrelated the variables are, it will always decrease the RMSE so naturally a RMSE with higher number of variable will be smaller than a RMSE with lower number of variable. Also RMSE won't ever increase by increasing the number of variable therefore the RMSE with higher number of variable will stay small no matter how unrelated any variable added to the model.
